@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Locations</string>
+    <string name="title">ЛОКАЦИИ</string>
+    <string name="streets">Улицы</string>
+    <string name="settings">Settings</string>
+    <string name="expenses">Expenses</string>
+    <string name="moodboard">Moodboard</string>
+    <string name="location">Location</string>
+    <string name="location_name_hint">Название локации</string>
+</resources>

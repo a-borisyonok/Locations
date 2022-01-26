@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/settings" />
+    <item
+        android:id="@+id/action_expenses"
+        android:icon="@drawable/ic_expenses"
+        android:title="@string/expenses" />
+
+    <item
+        android:id="@+id/placeholder"
+        android:title="" />
+    <item
+        android:id="@+id/action_moodboard"
+        android:icon="@drawable/ic_moodboard"
+        android:title="@string/moodboard" />
+    <item
+        android:id="@+id/action_location"
+        android:icon="@drawable/ic_location"
+        android:title="@string/location" />
+
+</menu>
