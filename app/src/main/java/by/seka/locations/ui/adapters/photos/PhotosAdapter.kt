@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import by.seka.locations.databinding.PhotoItemBinding
-import domain.model.Location
+import by.seka.locations.domain.model.Location
 
 class PhotosAdapter() :
     RecyclerView.Adapter<PhotosViewHolder>() {

@@ -9,29 +9,31 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ConcatAdapter
-import androidx.recyclerview.widget.RecyclerView
 import by.seka.locations.R
 import by.seka.locations.databinding.LocationsFragmentBinding
+import by.seka.locations.domain.model.Location
 import by.seka.locations.ui.adapters.header.HeaderAdapter
 import by.seka.locations.ui.adapters.locations.LocationsListAdapter
+import by.seka.locations.ui.observers.MyLifecycleObserver
 import dagger.hilt.android.AndroidEntryPoint
-import domain.model.Location
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class LocationsFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = LocationsFragment()
-    }
 
     private var _binding: LocationsFragmentBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: LocationsViewModel by viewModels()
 
+    private var observer: MyLifecycleObserver? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
+        observer = MyLifecycleObserver(requireActivity().activityResultRegistry)
+        observer?.let { lifecycle.addObserver(it) }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,18 +50,17 @@ class LocationsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val locationsAdapter = LocationsListAdapter(viewModel)
+
+        val locationsAdapter = observer?.let { LocationsListAdapter(viewModel, it) }
         val headerAdapter = HeaderAdapter()
         val concatAdapter = ConcatAdapter(headerAdapter, locationsAdapter)
+
         binding.apply {
             bottomNavi.selectedItemId = R.id.action_location
             recyclerView.adapter = concatAdapter
-                //context?.let { LocationsListAdapter(viewModel) }
-            //  ?.apply { setHasStableIds(true) }
 
             actionButton.setOnClickListener {
-                // Log.i("fragment", adapter.toString())
-                Log.i("fragment", viewModel.toString())
+
                 viewModel.createLocation(Location(0, ""))
             }
 
@@ -68,7 +69,8 @@ class LocationsFragment : Fragment() {
         }
         lifecycleScope.launchWhenStarted {
             viewModel.getLocations().collectLatest {
-                locationsAdapter.submitList(it)
+                Log.i("fragment", it.toString())
+                locationsAdapter?.submitList(it)
             }
         }
 //        viewModel.getLocations().onEach(::render).launchIn(lifecycleScope)
@@ -78,7 +80,7 @@ class LocationsFragment : Fragment() {
 
 //    private fun render(location: List<Location>) {
 //
-//        adapter?.submitList(location)
+//        loc?.submitList(location)
 //    }
 
 }

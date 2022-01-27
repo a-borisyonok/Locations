@@ -1,8 +1,8 @@
-package domain
+package by.seka.locations.domain
 
 import android.util.Log
 import by.seka.locations.data.LocationsDao
-import domain.model.Location
+import by.seka.locations.domain.model.Location
 import kotlinx.coroutines.flow.Flow
 
 import javax.inject.Inject
@@ -17,7 +17,9 @@ Log.i("repository", dao.getAll().toString())
 
     suspend fun create(location: Location) = dao.add(location)
 
-    suspend fun edit(locationName: String, id: Int) = dao.update(locationName, id)
+    suspend fun editName(locationName: String, id: Int) = dao.updateName(locationName, id)
+
+    suspend fun editPhotoList(photoList: MutableList<String>, id: Int) = dao.updatePhotosList(photoList, id)
 
     suspend fun deleteAll() = dao.deleteAll()
 }

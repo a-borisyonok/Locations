@@ -2,6 +2,7 @@ package by.seka.locations.di
 
 import android.content.Context
 import androidx.room.Room
+import by.seka.locations.converters.Converters
 import by.seka.locations.data.LocationsDB
 import by.seka.locations.data.LocationsDao
 import dagger.Module
@@ -16,12 +17,16 @@ import javax.inject.Singleton
 class DatabaseModule {
     @Provides
     @Singleton
+
     fun provideDatabase(@ApplicationContext appContext: Context): LocationsDB {
+
         return Room.databaseBuilder(
             appContext,
             LocationsDB::class.java,
             "locations.db"
-        ).fallbackToDestructiveMigration()
+        )
+            .fallbackToDestructiveMigration()
+            .addTypeConverter(Converters())
             .build()
     }
 

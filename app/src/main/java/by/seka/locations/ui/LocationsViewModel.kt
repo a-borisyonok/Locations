@@ -1,13 +1,11 @@
 package by.seka.locations.ui
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import domain.Repository
-import domain.model.Location
+import by.seka.locations.domain.Repository
+import by.seka.locations.domain.model.Location
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.toList
 
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,8 +23,12 @@ class LocationsViewModel @Inject constructor(private val repository: Repository)
     }
 
     fun editLocation(locationName: String, id: Int) {
-        viewModelScope.launch { repository.edit(locationName, id) }
+        viewModelScope.launch { repository.editName(locationName, id) }
 
+
+    }
+    fun editPhotoList(photoList: MutableList<String>, id: Int ){
+        viewModelScope.launch { repository.editPhotoList(photoList, id) }
     }
     fun deleteAll(){
         viewModelScope.launch { repository.deleteAll() }

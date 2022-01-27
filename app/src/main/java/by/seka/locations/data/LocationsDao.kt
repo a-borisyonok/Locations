@@ -1,7 +1,7 @@
 package by.seka.locations.data
 
 import androidx.room.*
-import domain.model.Location
+import by.seka.locations.domain.model.Location
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -17,7 +17,12 @@ interface LocationsDao {
 //    suspend fun update(location: Location)
 
     @Query("UPDATE locations SET locationName=:locationName WHERE id = :id")
-   suspend fun update(locationName: String, id: Int)
+   suspend fun updateName(locationName: String, id: Int)
+
+    @Query("UPDATE locations SET photosList=:photosList WHERE id = :id")
+    suspend fun updatePhotosList(photosList: MutableList<String>, id: Int)
+
+
 
     @Delete
     suspend fun delete(location: Location)

@@ -2,20 +2,25 @@ package by.seka.locations.ui.adapters.locations
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import by.seka.locations.databinding.LocationItemBinding
+import by.seka.locations.domain.model.Location
 import by.seka.locations.ui.LocationsViewModel
-import domain.model.Location
+import by.seka.locations.ui.observers.MyLifecycleObserver
 
-
-class LocationsListAdapter(private val viewModel: LocationsViewModel) :
-    ListAdapter<Location, LocationViewHolder>(itemComparator) {
+class LocationsListAdapter(
+    private val viewModel: LocationsViewModel,
+    private val observer: MyLifecycleObserver
+) :
+    ListAdapter<Location, LocationViewHolder>(itemComparator), DefaultLifecycleObserver {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
+
+         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = LocationItemBinding.inflate(layoutInflater, parent, false)
-        return LocationViewHolder(binding, viewModel)
+        return LocationViewHolder(binding, viewModel, observer)
     }
 
     override fun onBindViewHolder(holder: LocationViewHolder, position: Int) {
