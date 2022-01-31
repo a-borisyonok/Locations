@@ -91,7 +91,7 @@ class LocationViewHolder(
 
         deleteButton.visibility = View.GONE
 
-        bindingAdapter?.notifyItemChanged(bindingAdapterPosition)
+        bindingAdapter?.notifyDataSetChanged()
     }
 
     private fun deleteImagesFromStorage(newPhotoList: MutableList<String>) {
@@ -140,17 +140,18 @@ class LocationViewHolder(
 
             observer.imageUri.collectLatest {
 
-                if (it != Uri.EMPTY && it != null) {
+                if (it != Uri.EMPTY) {
                     uri = it
 
 
-                    if (item.photosList?.get(0) == EMPTY_STRING) {
+                    if (item.photosList?.isNotEmpty() == true && item.photosList[0] == EMPTY_STRING) {
                         item.photosList.removeAt(0)
                     }
 
                     ioScope.launch {
                         filepath = ImageHelper().saveBitmapIntoStorage(context, uri)
                         canAddPhoto.emit(true)
+                        uri = Uri.EMPTY
                     }
                 }
             }
@@ -161,6 +162,7 @@ class LocationViewHolder(
                 if (it) {
                     delay(500)
                     addPhoto(item, filepath)
+                    filepath = EMPTY_STRING
                 }
             }
         }

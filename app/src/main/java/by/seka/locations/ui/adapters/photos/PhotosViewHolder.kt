@@ -1,7 +1,6 @@
 package by.seka.locations.ui.adapters.photos
 
 import android.content.Context
-import android.util.Log
 import android.view.View
 import android.view.View.OnLongClickListener
 import androidx.core.os.bundleOf
@@ -62,8 +61,7 @@ class PhotosViewHolder(
 
     private fun longClickListener(): OnLongClickListener {
         return OnLongClickListener {
-            setCheckboxVisible()
-            binding.photoItem.isClickable = false
+
             adapterOnPhotoClick(true, -1L)
             true
         }
@@ -92,8 +90,8 @@ class PhotosViewHolder(
     private fun setCheckboxVisible() {
 
         with(binding) {
-            photoItem.isCheckable = true
             checkbox.visibility = View.VISIBLE
+            photoItem.isClickable = false
         }
     }
 }
