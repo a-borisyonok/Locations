@@ -1,26 +1,31 @@
 package by.seka.locations.ui.adapters.locations
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.DefaultLifecycleObserver
+import android.widget.ImageButton
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import by.seka.locations.databinding.LocationItemBinding
 import by.seka.locations.domain.model.Location
-import by.seka.locations.ui.LocationsViewModel
 import by.seka.locations.ui.observers.MyLifecycleObserver
 
 class LocationsListAdapter(
-    private val viewModel: LocationsViewModel,
-    private val observer: MyLifecycleObserver
-) :
-    ListAdapter<Location, LocationViewHolder>(itemComparator), DefaultLifecycleObserver {
+    private val observer: MyLifecycleObserver,
+    private val deleteButton: ImageButton,
+    private val adapterOnclick: (Location, Any) -> Unit,
 
+    ) :
+    ListAdapter<Location, LocationViewHolder>(itemComparator) {
+
+    @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationViewHolder {
 
-         val layoutInflater = LayoutInflater.from(parent.context)
+val context = parent.context.applicationContext
+        val layoutInflater = LayoutInflater.from(parent.context)
         val binding = LocationItemBinding.inflate(layoutInflater, parent, false)
-        return LocationViewHolder(binding, viewModel, observer)
+        return LocationViewHolder(binding, adapterOnclick, observer, deleteButton, context)
     }
 
     override fun onBindViewHolder(holder: LocationViewHolder, position: Int) {

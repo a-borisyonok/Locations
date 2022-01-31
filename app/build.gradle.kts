@@ -76,17 +76,9 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.40.1")
     kapt("com.google.dagger:hilt-compiler:2.40.1")
 
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    kapt ("com.github.bumptech.glide:compiler:4.11.0")
 
     testImplementation("junit:junit:4.13.2")
 
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0-RC")
-
-
-    testImplementation("androidx.test:core:1.4.0")
-
-    testImplementation("org.mockito:mockito-inline:3.10.0")
-
-    testImplementation("org.mockito:mockito-core:4.0.0")
-
-}
+   }

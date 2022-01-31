@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="menu_inactive">#CFD2CC</color>
     <color name="menu_active">#212020</color>
+    <color name="transparent">#00000000</color>
 </resources>

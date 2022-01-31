@@ -6,17 +6,38 @@
     android:layout_height="100dp"
     android:layout_gravity="center"
     android:layout_margin="8dp"
-    android:checkable="true"
-    android:clickable="true"
-    android:focusable="true"
+    android:checkable="false"
+    android:clickable="false"
+    android:focusable="false"
     app:cardCornerRadius="16dp"
-    app:cardElevation="0dp">
+    app:cardElevation="0dp"
+    app:checkedIconTint="@android:color/transparent">
+
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="top|end"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="72dp"
+        android:button="@drawable/checkbox_selector"
+        android:checked="false"
+        android:elevation="24dp"
+        android:foreground="@drawable/checkbox_selector"
+
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/iv_photo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/test_image" />
+        android:clickable="false"
+        android:contentDescription="@string/app_name"
+        android:focusable="false"
+        android:scaleType="centerCrop">
+
+    </ImageView>
 
 </com.google.android.material.card.MaterialCardView>

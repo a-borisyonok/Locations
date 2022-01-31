@@ -1,7 +1,6 @@
 package by.seka.locations.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,11 +50,17 @@ class LocationsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val locationsAdapter = observer?.let { LocationsListAdapter(viewModel, it) }
+        val deleteButton = binding.deletePhotosButton
+        val locationsAdapter = observer?.let {
+            LocationsListAdapter(it, deleteButton) { item, parameter ->
+                performClick(item, parameter)
+            }
+        }
         val headerAdapter = HeaderAdapter()
         val concatAdapter = ConcatAdapter(headerAdapter, locationsAdapter)
 
         binding.apply {
+
             bottomNavi.selectedItemId = R.id.action_location
             recyclerView.adapter = concatAdapter
 
@@ -64,23 +69,34 @@ class LocationsFragment : Fragment() {
                 viewModel.createLocation(Location(0, ""))
             }
 
+            deleteAll.setOnClickListener {
 
-            deleteAll.setOnClickListener { viewModel.deleteAll() }
+                viewModel.deleteAll()
+            }
         }
+
         lifecycleScope.launchWhenStarted {
             viewModel.getLocations().collectLatest {
-                Log.i("fragment", it.toString())
                 locationsAdapter?.submitList(it)
             }
         }
-//        viewModel.getLocations().onEach(::render).launchIn(lifecycleScope)
-
-
     }
 
-//    private fun render(location: List<Location>) {
-//
-//        loc?.submitList(location)
-//    }
+    private fun performClick(item: Location, parameter: Any) {
 
+        when (parameter::class) {
+
+            String::class -> viewModel.editLocation(parameter.toString(), item.id)
+
+            ArrayList::class -> {
+                val param = parameter as ArrayList<String>
+                if (param.isNotEmpty()) {
+                    viewModel.editPhotoList(param, item.id)
+                } else {
+                    viewModel.removeAllPhotos(item.id)
+
+                }
+            }
+        }
+    }
 }

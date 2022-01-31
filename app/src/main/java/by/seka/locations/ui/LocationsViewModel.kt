@@ -30,6 +30,9 @@ class LocationsViewModel @Inject constructor(private val repository: Repository)
     fun editPhotoList(photoList: MutableList<String>, id: Int ){
         viewModelScope.launch { repository.editPhotoList(photoList, id) }
     }
+    fun removeAllPhotos(id: Int){
+        viewModelScope.launch { repository.removeAllPhotos(id) }
+    }
     fun deleteAll(){
         viewModelScope.launch { repository.deleteAll() }
     }

@@ -1,41 +1,44 @@
 package by.seka.locations.ui.adapters.photos
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ListAdapter
 import by.seka.locations.databinding.PhotoItemBinding
-import by.seka.locations.domain.model.Location
+import kotlin.coroutines.coroutineContext
 
-class PhotosAdapter() :
-    RecyclerView.Adapter<PhotosViewHolder>() {
+class PhotosAdapter(
+
+    private val adapterOnLongClick: (Any, Long) -> Unit
+) :
+    ListAdapter<String, PhotosViewHolder>(itemComparator) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotosViewHolder {
+        val context = parent.context.applicationContext
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = PhotoItemBinding.inflate(layoutInflater, parent, false)
-        return PhotosViewHolder(binding)
+        return PhotosViewHolder(binding, context, adapterOnLongClick)
     }
 
     override fun onBindViewHolder(holder: PhotosViewHolder, position: Int) {
 
 
-        holder.bind(itemCount)
+        holder.bind(getItem(position), position)
     }
 
-    override fun getItemCount(): Int {
-        return 6
-    }
 
     private companion object {
 
-        private val itemComparator = object : DiffUtil.ItemCallback<Location>() {
+        private val itemComparator = object : DiffUtil.ItemCallback<String>() {
 
-            override fun areItemsTheSame(oldItem: Location, newItem: Location): Boolean {
-                return oldItem.id == newItem.id
+
+            override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
+            return  oldItem.length == newItem.length
             }
 
-            override fun areContentsTheSame(oldItem: Location, newItem: Location): Boolean {
-                return oldItem == newItem
+            override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
+               return  oldItem == newItem
             }
         }
     }

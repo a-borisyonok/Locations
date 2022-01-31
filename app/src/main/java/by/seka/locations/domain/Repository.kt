@@ -7,19 +7,23 @@ import kotlinx.coroutines.flow.Flow
 
 import javax.inject.Inject
 
-class Repository @Inject constructor (private val dao: LocationsDao) {
+class Repository @Inject constructor(private val dao: LocationsDao) {
 
     fun getAll(): Flow<List<Location>> {
-Log.i("repository", dao.getAll().toString())
+        Log.i("repository", dao.getAll().toString())
 
-       return dao.getAll()
+        return dao.getAll()
     }
 
     suspend fun create(location: Location) = dao.add(location)
 
     suspend fun editName(locationName: String, id: Int) = dao.updateName(locationName, id)
 
-    suspend fun editPhotoList(photoList: MutableList<String>, id: Int) = dao.updatePhotosList(photoList, id)
+    suspend fun editPhotoList(photoList: MutableList<String>, id: Int) =
+        dao.updatePhotosList(photoList, id)
+
+    suspend fun removeAllPhotos( id: Int) =
+        dao.removeAllPhotos( id)
 
     suspend fun deleteAll() = dao.deleteAll()
 }

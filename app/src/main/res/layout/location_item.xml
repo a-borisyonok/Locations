@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="16dp"
+    android:layout_marginBottom="24dp"
+    android:focusable="true"
     app:cardCornerRadius="16dp"
-    app:cardElevation="16dp">
+    app:cardElevation="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -35,7 +36,8 @@
             android:background="@android:color/transparent"
             android:src="@drawable/ic_add_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/app_name" />
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/images_top_barrier"
