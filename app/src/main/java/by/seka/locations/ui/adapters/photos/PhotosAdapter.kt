@@ -1,16 +1,18 @@
 package by.seka.locations.ui.adapters.photos
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import by.seka.locations.databinding.PhotoItemBinding
-import kotlin.coroutines.coroutineContext
+import by.seka.locations.ui.LocationsFragment
 
 class PhotosAdapter(
-
+    private val parentFragment: LocationsFragment,
     private val adapterOnLongClick: (Any, Long) -> Unit
+
 ) :
     ListAdapter<String, PhotosViewHolder>(itemComparator) {
 
@@ -24,7 +26,7 @@ class PhotosAdapter(
     override fun onBindViewHolder(holder: PhotosViewHolder, position: Int) {
 
 
-        holder.bind(getItem(position), position)
+        holder.bind(getItem(position), position, parentFragment)
     }
 
 
@@ -34,11 +36,11 @@ class PhotosAdapter(
 
 
             override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
-            return  oldItem.length == newItem.length
+                return oldItem.length == newItem.length
             }
 
             override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
-               return  oldItem == newItem
+                return oldItem == newItem
             }
         }
     }

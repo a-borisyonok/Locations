@@ -9,23 +9,31 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import by.seka.locations.databinding.LocationItemBinding
 import by.seka.locations.domain.model.Location
+import by.seka.locations.ui.LocationsFragment
 import by.seka.locations.ui.observers.MyLifecycleObserver
 
 class LocationsListAdapter(
     private val observer: MyLifecycleObserver,
     private val deleteButton: ImageButton,
-    private val adapterOnclick: (Location, Any) -> Unit,
-
-    ) :
+    private val parentFragment: LocationsFragment,
+    private val adapterOnclick: (Location, Any) -> Unit
+) :
     ListAdapter<Location, LocationViewHolder>(itemComparator) {
 
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationViewHolder {
 
-val context = parent.context.applicationContext
+        val context = parent.context.applicationContext
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = LocationItemBinding.inflate(layoutInflater, parent, false)
-        return LocationViewHolder(binding, adapterOnclick, observer, deleteButton, context)
+        return LocationViewHolder(
+            binding,
+            adapterOnclick,
+            observer,
+            deleteButton,
+            context,
+            parentFragment
+        )
     }
 
     override fun onBindViewHolder(holder: LocationViewHolder, position: Int) {

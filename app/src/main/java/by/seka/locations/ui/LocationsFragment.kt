@@ -52,7 +52,7 @@ class LocationsFragment : Fragment() {
 
         val deleteButton = binding.deletePhotosButton
         val locationsAdapter = observer?.let {
-            LocationsListAdapter(it, deleteButton) { item, parameter ->
+            LocationsListAdapter(it, deleteButton, this) { item, parameter ->
                 performClick(item, parameter)
             }
         }

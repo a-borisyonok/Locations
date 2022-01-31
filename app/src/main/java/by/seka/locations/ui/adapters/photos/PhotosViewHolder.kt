@@ -1,16 +1,19 @@
 package by.seka.locations.ui.adapters.photos
 
 import android.content.Context
-import android.net.Uri
+import android.util.Log
 import android.view.View
 import android.view.View.OnLongClickListener
-import androidx.core.net.toUri
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import by.seka.locations.R
 import by.seka.locations.databinding.PhotoItemBinding
+import by.seka.locations.ui.LocationsFragment
 import by.seka.locations.ui.adapters.`interface`.PhotoLongClickListener
 import by.seka.locations.ui.util.EMPTY_STRING
+import by.seka.locations.ui.util.PATH
 import com.bumptech.glide.Glide
-import java.io.File
 
 
 class PhotosViewHolder(
@@ -23,7 +26,7 @@ class PhotosViewHolder(
     private var checkedPhoto: String = EMPTY_STRING
 
 
-    fun bind(item: String, position: Int) {
+    fun bind(item: String, position: Int, parentFragment: LocationsFragment) {
 
         if (item.isNotEmpty()) {
             Glide.with(context)
@@ -40,16 +43,19 @@ class PhotosViewHolder(
 
             photoItem.setOnLongClickListener(longClickListener())
 
-            if (photoItem.isClickable) {
-                photoItem.setOnClickListener {
-                    checkOrUncheckPhoto(item)
-                    adapterOnPhotoClick(checkedPhoto, position.toLong())
-                }
+            val imagePath = bundleOf(PATH to item)
 
-                checkbox.setOnClickListener {
-                    checkOrUncheckPhoto(item)
-                    adapterOnPhotoClick(checkedPhoto, position.toLong())
-                }
+
+            photoItem.setOnClickListener {
+
+                parentFragment.findNavController()
+                    .navigate(R.id.action_locationsFragment_to_fullScreenPhoto, imagePath)
+            }
+
+            checkbox.setOnClickListener {
+
+                checkOrUncheckPhoto(item)
+                adapterOnPhotoClick(checkedPhoto, position.toLong())
             }
         }
     }
@@ -57,7 +63,7 @@ class PhotosViewHolder(
     private fun longClickListener(): OnLongClickListener {
         return OnLongClickListener {
             setCheckboxVisible()
-            binding.photoItem.isClickable = true
+            binding.photoItem.isClickable = false
             adapterOnPhotoClick(true, -1L)
             true
         }
@@ -87,8 +93,6 @@ class PhotosViewHolder(
 
         with(binding) {
             photoItem.isCheckable = true
-            photoItem.isClickable = true
-            photoItem.isFocusable = true
             checkbox.visibility = View.VISIBLE
         }
     }

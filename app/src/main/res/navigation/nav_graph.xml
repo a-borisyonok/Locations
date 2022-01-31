@@ -3,10 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/blankFragment">
+    app:startDestination="@id/locationsFragment">
 
     <fragment
-        android:id="@+id/blankFragment"
+        android:id="@+id/fullScreenPhoto"
+        android:name="by.seka.locations.ui.FullScreenPhoto"
+        android:label="full_screen_photo"
+        tools:layout="@layout/full_screen_photo" >
+        <argument
+            android:name="imagepath"
+            app:argType="string"
+            android:defaultValue='""' />
+        <action
+            android:id="@+id/action_fullScreenPhoto_to_locationsFragment"
+            app:destination="@id/locationsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/locationsFragment"
         android:name="by.seka.locations.ui.LocationsFragment"
-        android:label="BlankFragment" />
+        android:label="locations_fragment"
+        tools:layout="@layout/locations_fragment" >
+        <action
+            android:id="@+id/action_locationsFragment_to_fullScreenPhoto"
+            app:destination="@id/fullScreenPhoto" />
+    </fragment>
 </navigation>

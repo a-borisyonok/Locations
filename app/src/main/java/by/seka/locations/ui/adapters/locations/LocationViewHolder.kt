@@ -10,6 +10,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import by.seka.locations.databinding.LocationItemBinding
 import by.seka.locations.domain.model.Location
+import by.seka.locations.ui.LocationsFragment
 import by.seka.locations.ui.adapters.`interface`.PhotoLongClickListener
 import by.seka.locations.ui.adapters.photos.PhotosAdapter
 import by.seka.locations.ui.helper.ImageHelper
@@ -27,12 +28,13 @@ class LocationViewHolder(
     private val adapterOnClick: (Location, Any) -> Unit,
     private val observer: MyLifecycleObserver,
     private val deleteButton: ImageButton,
-    private val context: Context
+    private val context: Context,
+    parentFragment: LocationsFragment
 
 ) : RecyclerView.ViewHolder(binding.root) {
 
     private val photosAdapter =
-        PhotosAdapter { item, key -> doClick(item, key) }
+        PhotosAdapter(parentFragment) { item, key -> doClick(item, key) }
     private val mainScope = CoroutineScope(Dispatchers.Main)
     private val ioScope = CoroutineScope(Dispatchers.IO)
 
